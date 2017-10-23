@@ -5,6 +5,7 @@
       <div class="row">
         <div class="col-sm-12 text-center">
           <div class="alert alert-info">Info: Click on a Quote to delete it!</div>
+          <div v-show="isToShowQuoteEmpty" class="alert alert-warning">Warning: Please write the quote to add.</div>
         </div>
       </div>
     </div>
@@ -13,10 +14,12 @@
 <script>
 import QuoteGrid from './components/QuoteGrid.vue';
 import NewQuote from './components/NewQuote.vue';
+import {eventBus} from './main';
 
 export default {
   data: function() {
     return {
+      isToShowQuoteEmpty: false,
       quotes: [
         'Just a Quote to see something'
       ],
@@ -26,6 +29,7 @@ export default {
   methods: {
     newQuote(quote) {
       this.quotes.push(quote);
+      this.isToShowQuoteEmpty = false;
     },
     deleteQuote(index) {
       this.quotes.splice(index,1);
@@ -34,6 +38,11 @@ export default {
   components: {
     appQuoteGrid: QuoteGrid,
     appNewQuote: NewQuote
+  },
+  created() {
+    eventBus.$on('isQuoteEmpty', (data) => {
+      this.isToShowQuoteEmpty = true;
+    });
   }
 }
 </script>

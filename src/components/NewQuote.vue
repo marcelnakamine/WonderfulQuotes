@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import {eventBus} from '../main';
+
 export default {
   data: function() {
     return {
@@ -21,8 +23,12 @@ export default {
   },
   methods: {
     createNew() {
-      this.$emit('quoteAdded', this.quote);
-      this.quote = '';
+      if (this.quote === '') {
+        eventBus.$emit('isQuoteEmpty', this.quote);
+      } else {
+        this.$emit('quoteAdded', this.quote);
+        this.quote = '';
+      }
     }
   }
 }
