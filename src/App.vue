@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+      <app-progress-bar :quoteCount="quotes.length" :maxQuotes="maxQuotes"></app-progress-bar>
       <app-new-quote @quoteAdded="newQuote"></app-new-quote>
       <app-quote-grid :quotes="quotes" @quoteDeleted="deleteQuote"></app-quote-grid>
       <div class="row">
@@ -14,6 +15,7 @@
 <script>
 import QuoteGrid from './components/QuoteGrid.vue';
 import NewQuote from './components/NewQuote.vue';
+import ProgressBar from './components/ProgressBar.vue';
 import {eventBus} from './main';
 
 export default {
@@ -37,7 +39,8 @@ export default {
   },
   components: {
     appQuoteGrid: QuoteGrid,
-    appNewQuote: NewQuote
+    appNewQuote: NewQuote,
+    appProgressBar: ProgressBar
   },
   created() {
     eventBus.$on('isQuoteEmpty', (data) => {
